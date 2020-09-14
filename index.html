@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrackerBT</title>
+    <link rel="stylesheet" href="./css/index.min.css" />
+    <script src="./js/index.js"></script>
+  </head>
+    <header>
+      <h1>Cazzo hai fatto oggi?</h1>
+    </header>
+    <content id="content">
+      <div class="toInsert">
+        <input type="text" name="titolo" id="titolo" spellcheck="false" />
+        <input
+          value="0"
+          type="range"
+          id="hourSlider"
+          name="ore"
+          step="0.5"
+          max="8"
+          min="0,5"
+        />
+        <p id="sliderLabel">0 H</p>
+        <button id="addBtn">+</button>
+      </div>
+      <div id="tasksCompleted"></div>
+    </content>
+  </body>
+</html>

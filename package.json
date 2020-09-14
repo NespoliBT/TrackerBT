@@ -1,0 +1,17 @@
+{
+  "name": "trackerbt",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . --all"
+  },
+  "devDependencies": {
+    "electron": "^9.1.1",
+    "electron-packager": "^15.0.0"
+  },
+  "dependencies": {
+    "electron-reload": "^1.5.0",
+    "sqlite3": "^5.0.0"
+  }
+}

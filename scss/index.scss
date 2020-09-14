@@ -1,0 +1,146 @@
+@import "./varibles.scss";
+
+@font-face {
+  font-family: osevka;
+  src: url("../fonts/osevka.ttf") format("truetype");
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: osevka;
+  outline: 0;
+  user-select: none;
+  color: $color_8;
+}
+
+body {
+  background: $color_1;
+  header {
+    text-align: center;
+    padding: 50px;
+    h1 {
+      color: $color_4;
+    }
+  }
+  content {
+    .toInsert {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      #titolo {
+        border: 0;
+        border-radius: 100px;
+        padding: 20px;
+        background: $color_2;
+        font-size: 20px;
+      }
+      #hourSlider {
+        background: $color_2;
+        -webkit-appearance: none;
+        border-radius: 100px;
+        overflow: hidden;
+        &::-webkit-slider-runnable-track {
+          height: 20px;
+          -webkit-appearance: none;
+          color: #13bba4;
+        }
+        &::-webkit-slider-thumb {
+          width: 20px;
+          -webkit-appearance: none;
+          height: 20px;
+          background: $color_3;
+          border-radius: 100%;
+          box-shadow: -80px 0 0 70px $color_3;
+        }
+      }
+      #sliderLabel {
+        font-size: 25px;
+        width: 75px;
+        text-align: center;
+      }
+      #addBtn {
+        transition: 0.2s;
+        border: 0;
+        border-radius: 100px;
+        height: 40px;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: $color_6;
+        font-size: 20px;
+        color: $color_1;
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+    #tasksCompleted {
+      margin-top: 50px;
+      font-size: 20px;
+      .header {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 70%;
+        margin: 0 auto;
+        border-bottom: 2px dashed $color_2;
+        .activity {
+          width: 50%;
+          text-align: right;
+          padding: 10px;
+          color: $color_5;
+        }
+        .hours {
+          width: 50%;
+          text-align: left;
+          padding: 10px;
+          color: $color_7;
+        }
+      }
+      .task {
+        transition: 0.5s;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-bottom: 2px dashed $color_2;
+        width: 70%;
+        margin: 0 auto;
+        position: relative;
+        .taskTitle {
+          text-align: right;
+          width: 50%;
+          padding: 10px;
+        }
+        .taskHours {
+          text-align: left;
+          width: 50%;
+          border-left: 2px solid $color_2;
+          padding: 10px;
+        }
+        .deleteElement {
+          transition: 0.5s;
+          opacity: 0;
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          background: $color_5;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 100px;
+          cursor: pointer;
+        }
+        &:hover {
+          .deleteElement {
+            opacity: 1;
+          }
+          width: 75%;
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+}
