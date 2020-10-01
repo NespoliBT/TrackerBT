@@ -125,17 +125,24 @@ body content #tasksCompleted .header {
 }
 
 body content #tasksCompleted .header .activity {
-  width: 50%;
+  width: 33%;
   text-align: right;
   padding: 10px;
   color: #e25987;
 }
 
 body content #tasksCompleted .header .hours {
-  width: 50%;
-  text-align: left;
+  width: 33%;
+  text-align: center;
   padding: 10px;
   color: #b877b4;
+}
+
+body content #tasksCompleted .header .date {
+  width: 33%;
+  text-align: left;
+  padding: 10px;
+  color: #85ba86;
 }
 
 body content #tasksCompleted .task {
@@ -162,6 +169,13 @@ body content #tasksCompleted .task .taskTitle {
 }
 
 body content #tasksCompleted .task .taskHours {
+  text-align: center;
+  width: 50%;
+  border-left: 2px solid #212931;
+  padding: 10px;
+}
+
+body content #tasksCompleted .task .taskDate {
   text-align: left;
   width: 50%;
   border-left: 2px solid #212931;

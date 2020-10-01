@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
   addBtn.addEventListener("click", () => {
     sliderValue = slider.value;
     titoloValue = titolo.value;
-    ipcRenderer.send("addTask", { titoloValue, sliderValue });
+    dateValue = new Date();
+    ipcRenderer.send("addTask", { titoloValue, sliderValue, dateValue });
   });
   ipcRenderer.send("askTasks");
 });
@@ -32,10 +33,17 @@ ipcRenderer.on("sendTasks", (event, arg) => {
   hourLabelElement.setAttribute("class", "hours");
   hourLabelElement.textContent = "Ore";
 
+  dateLabelElement = document.createElement("p");
+  dateLabelElement.setAttribute("class", "date");
+  dateLabelElement.textContent = "Data";
+
   headerElement.appendChild(activityElement);
   headerElement.appendChild(hourLabelElement);
+  headerElement.appendChild(dateLabelElement);
   tasksCompleted.appendChild(headerElement);
   arg.forEach((task) => {
+    date = new Date(Number(task.date));
+    console.log(date);
     taskElement = document.createElement("div");
     taskElement.setAttribute("class", "task");
 
@@ -47,6 +55,11 @@ ipcRenderer.on("sendTasks", (event, arg) => {
     hoursElement.setAttribute("class", "taskHours");
     hoursElement.textContent = task.hours + " H";
 
+    dateElement = document.createElement("div");
+    dateElement.setAttribute("class", "taskDate");
+    dateElement.textContent =
+      date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+
     deleteElement = document.createElement("div");
     deleteElement.setAttribute("class", "deleteElement");
     deleteElement.setAttribute("id", task.id);
@@ -55,6 +68,7 @@ ipcRenderer.on("sendTasks", (event, arg) => {
 
     taskElement.appendChild(titleElement);
     taskElement.appendChild(hoursElement);
+    taskElement.appendChild(dateElement);
     taskElement.appendChild(deleteElement);
     tasksCompleted.appendChild(taskElement);
   });

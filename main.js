@@ -8,6 +8,7 @@ let win;
 db.run(`CREATE TABLE IF NOT EXISTS tasks (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title TEXT,
+  date TEXT,
   hours INTEGER
   )`);
 
@@ -26,10 +27,10 @@ ipcMain.on("askTasks", (event) => {
 });
 
 ipcMain.on("addTask", (event, arg) => {
-  if (arg.titoloValue && arg.sliderValue) {
+  if (arg.titoloValue && arg.sliderValue && arg.dateValue) {
     db.run(
-      `INSERT INTO tasks(title, hours) VALUES(?, ?)`,
-      [arg.titoloValue, arg.sliderValue],
+      `INSERT INTO tasks(title, hours, date) VALUES(?, ?, ?)`,
+      [arg.titoloValue, arg.sliderValue, arg.dateValue],
       function (err) {
         if (err) {
           return console.log(err.message);
@@ -51,7 +52,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: false,
+    frame: true,
     webPreferences: {
       nodeIntegration: true,
     },

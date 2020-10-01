@@ -88,16 +88,22 @@ body {
         margin: 0 auto;
         border-bottom: 2px dashed $color_2;
         .activity {
-          width: 50%;
+          width: 33%;
           text-align: right;
           padding: 10px;
           color: $color_5;
         }
         .hours {
-          width: 50%;
-          text-align: left;
+          width: 33%;
+          text-align: center;
           padding: 10px;
           color: $color_7;
+        }
+        .date {
+          width: 33%;
+          text-align: left;
+          padding: 10px;
+          color: $color_6;
         }
       }
       .task {
@@ -115,6 +121,13 @@ body {
           padding: 10px;
         }
         .taskHours {
+          text-align: center;
+          width: 50%;
+          border-left: 2px solid $color_2;
+          padding: 10px;
+        }
+
+        .taskDate {
           text-align: left;
           width: 50%;
           border-left: 2px solid $color_2;
