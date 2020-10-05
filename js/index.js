@@ -64,7 +64,7 @@ ipcRenderer.on("sendTasks", (event, arg) => {
     deleteElement.setAttribute("class", "deleteElement");
     deleteElement.setAttribute("id", task.id);
     deleteElement.setAttribute("onclick", "deleteTask(this)");
-    deleteElement.textContent = "Elimina";
+    deleteElement.textContent = "";
 
     taskElement.appendChild(titleElement);
     taskElement.appendChild(hoursElement);

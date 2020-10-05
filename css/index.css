@@ -1,6 +1,6 @@
 @font-face {
   font-family: osevka;
-  src: url("../fonts/osevka.ttf") format("truetype");
+  src: url("../fonts/Iosevka.ttf") format("truetype");
 }
 
 * {
@@ -185,11 +185,10 @@ body content #tasksCompleted .task .taskDate {
 body content #tasksCompleted .task .deleteElement {
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  opacity: 0;
   position: absolute;
-  height: 100%;
-  width: 100%;
-  background: #e25987;
+  right: 20px;
+  color: #e25987;
+  font-size: 30px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -201,14 +200,12 @@ body content #tasksCompleted .task .deleteElement {
           align-items: center;
   border-radius: 100px;
   cursor: pointer;
+  opacity: 0.8;
 }
 
-body content #tasksCompleted .task:hover {
-  width: 75%;
-  border-bottom: 0;
-}
-
-body content #tasksCompleted .task:hover .deleteElement {
+body content #tasksCompleted .task .deleteElement:hover {
   opacity: 1;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 /*# sourceMappingURL=index.css.map */

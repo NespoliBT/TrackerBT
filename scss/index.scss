@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: osevka;
-  src: url("../fonts/osevka.ttf") format("truetype");
+  src: url("../fonts/Iosevka.ttf") format("truetype");
 }
 
 * {
@@ -135,23 +135,20 @@ body {
         }
         .deleteElement {
           transition: 0.5s;
-          opacity: 0;
           position: absolute;
-          height: 100%;
-          width: 100%;
-          background: $color_5;
+          right: 20px;
+          color: $color_5;
+          font-size: 30px;
           display: flex;
           justify-content: center;
           align-items: center;
           border-radius: 100px;
           cursor: pointer;
-        }
-        &:hover {
-          .deleteElement {
+          opacity: 0.8;
+          &:hover {
             opacity: 1;
+            transform: scale(1.1);
           }
-          width: 75%;
-          border-bottom: 0;
         }
       }
     }
