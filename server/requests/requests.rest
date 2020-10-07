@@ -1,0 +1,29 @@
+
+### Get Tasks
+
+GET http://localhost:3001/tasks
+
+### Create Task
+
+POST http://localhost:3001/tasks/new
+Content-Type: application/json
+
+{
+    "title" : "asdasdasd",
+    "hours" : 2,
+    "date" : "123124151"
+}
+
+### Delete Task
+
+POST http://localhost:3001/tasks/delete
+Content-Type: application/json
+
+{
+    "id" : "1"
+}
+
+### Ip adress
+
+GET http://localhost:3001/ipadress
+Content-Type: application/json

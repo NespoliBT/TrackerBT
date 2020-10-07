@@ -42,6 +42,7 @@ ipcRenderer.on("sendTasks", (event, arg) => {
   headerElement.appendChild(dateLabelElement);
   tasksCompleted.appendChild(headerElement);
   arg.forEach((task) => {
+    console.log(task.date);
     date = new Date(Number(task.date));
     console.log(date);
     taskElement = document.createElement("div");
