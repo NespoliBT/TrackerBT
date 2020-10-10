@@ -1,5 +1,21 @@
 const { ipcRenderer } = require("electron");
 
+async function editDate(el) {
+  window.addEventListener("click", function (e) {
+    if (!el.contains(e.target)) {
+      id = el.parentNode.id;
+      newDate = el.innerHTML;
+      ipcRenderer.send("updateDate", { id, newDate });
+    }
+    location.reload();
+  });
+}
+
+function deleteTask(el) {
+  id = el.parentNode.id;
+  ipcRenderer.send("deleteTask", id);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   addBtn = document.getElementById("addBtn");
   titolo = document.getElementById("titolo");
@@ -7,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
   sliderLabel = document.getElementById("sliderLabel");
   tasksCompleted = document.getElementById("tasksCompleted");
   content = document.getElementById("content");
+
   slider.addEventListener("input", () => {
     sliderLabel.innerHTML = slider.value + " H";
   });
@@ -19,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   ipcRenderer.send("askTasks");
 });
+
 ipcRenderer.on("sendTasks", (event, arg) => {
   tasksCompleted.innerHTML = "";
 
@@ -47,6 +65,7 @@ ipcRenderer.on("sendTasks", (event, arg) => {
     console.log(date);
     taskElement = document.createElement("div");
     taskElement.setAttribute("class", "task");
+    taskElement.setAttribute("id", task.id);
 
     titleElement = document.createElement("div");
     titleElement.setAttribute("class", "taskTitle");
@@ -58,12 +77,13 @@ ipcRenderer.on("sendTasks", (event, arg) => {
 
     dateElement = document.createElement("div");
     dateElement.setAttribute("class", "taskDate");
+    dateElement.setAttribute("contenteditable", "true");
     dateElement.textContent =
       date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    dateElement.setAttribute("oninput", "editDate(this)");
 
     deleteElement = document.createElement("div");
     deleteElement.setAttribute("class", "deleteElement");
-    deleteElement.setAttribute("id", task.id);
     deleteElement.setAttribute("onclick", "deleteTask(this)");
     deleteElement.textContent = "";
 
@@ -74,8 +94,3 @@ ipcRenderer.on("sendTasks", (event, arg) => {
     tasksCompleted.appendChild(taskElement);
   });
 });
-
-function deleteTask(el) {
-  id = el.id;
-  ipcRenderer.send("deleteTask", id);
-}

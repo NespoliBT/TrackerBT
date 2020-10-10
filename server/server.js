@@ -48,6 +48,12 @@ app.post("/tasks/delete", (req, res) => {
   db.run("DELETE FROM tasks WHERE id=?", id);
 });
 
+app.post("/date/update", (req, res) => {
+  id = req.body.id;
+  date = new Date(req.body.date);
+  db.run("UPDATE tasks SET date = ? WHERE id = ?", [date, id]);
+});
+
 app.get("/ipadress", (req, res) => {
   res.send(ip.address());
 });

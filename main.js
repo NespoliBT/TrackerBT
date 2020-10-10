@@ -35,10 +35,30 @@ ipcMain.on("addTask", (event, arg) => {
   updateTasks();
   event.reply("sendTasks", tasks);
 });
+
 ipcMain.on("deleteTask", (event, arg) => {
   axios.post("http://localhost:3001/tasks/delete", {
     id: arg,
   });
+  updateTasks();
+  event.reply("sendTasks", tasks);
+});
+
+ipcMain.on("updateDate", (event, arg) => {
+  dateArray = arg.newDate.split("/");
+  dateToInsert = new Date([
+    dateArray[1],
+    dateArray[0],
+    dateArray[2],
+    "23:00:00",
+  ]);
+
+  if (!isNaN(dateToInsert)) {
+    axios.post("http://localhost:3001/date/update", {
+      id: arg.id,
+      date: dateToInsert,
+    });
+  }
   updateTasks();
   event.reply("sendTasks", tasks);
 });
