@@ -44,6 +44,18 @@ ipcMain.on("deleteTask", (event, arg) => {
   event.reply("sendTasks", tasks);
 });
 
+ipcMain.on("askQrCode", (event, arg) => {
+  axios
+    .get("http://localhost:3001/ipaddress")
+    .then(function ({ data }) {
+      console.log(data);
+      event.reply("qrCode", data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+});
+
 ipcMain.on("updateDate", (event, arg) => {
   dateArray = arg.newDate.split("/");
   dateToInsert = new Date([

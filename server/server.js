@@ -54,7 +54,7 @@ app.post("/date/update", (req, res) => {
   db.run("UPDATE tasks SET date = ? WHERE id = ?", [date, id]);
 });
 
-app.get("/ipadress", (req, res) => {
+app.get("/ipaddress", (req, res) => {
   res.send(ip.address());
 });
 

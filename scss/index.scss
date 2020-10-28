@@ -152,5 +152,50 @@ body {
         }
       }
     }
+    .qrCodeContainer {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      width: fit-content;
+      height: fit-content;
+      .qrCode {
+        height: 100px;
+        width: 100px;
+        cursor: pointer;
+        svg {
+          border-radius: 4%;
+        }
+      }
+    }
+    .active {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(2px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .qrCode {
+        width: 30%;
+        height: auto;
+        overflow: hidden;
+        animation: pop;
+        animation-duration: 0.5s;
+      }
+    }
+  }
+}
+
+@keyframes pop {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 31%;
+  }
+  100% {
+    width: 30%;
   }
 }
