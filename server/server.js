@@ -8,7 +8,6 @@ const ip = require("ip");
 app.use(express.json());
 app.use(cors());
 
-console.dir(ip.address());
 db.run(`
 
     CREATE TABLE IF NOT EXISTS tasks (
@@ -39,6 +38,13 @@ app.post("/tasks/new", (req, res) => {
         return console.log(err.message);
       }
       console.log(`A row has been inserted with rowid ${this.lastID}`);
+      task = {
+        id: this.lastID,
+        title: title,
+        hours: hours,
+        date: Number(date),
+      };
+      res.send(task);
     }
   );
 });
