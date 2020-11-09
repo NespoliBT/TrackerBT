@@ -149,6 +149,8 @@ ipcRenderer.on("sendTasks", (event, arg) => {
       let date = new Date(Number(task.date)).setHours(0, 0, 0, 0);
       let nextDate = new Date(Number(tasks[j + 1].date)).setHours(0, 0, 0, 0);
 
+      if (i === 0) group.push(task);
+      
       if (date == nextDate) {
         group.push(tasks[j + 1]);
         j += 1;
