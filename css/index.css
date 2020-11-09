@@ -3,6 +3,24 @@
   src: url("../fonts/Iosevka.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: Pacifico;
+  src: url("../fonts/Pacifico.ttf") format("truetype");
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #dd83a0;
+  border-radius: 20px;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -28,6 +46,9 @@ body header {
 
 body header h1 {
   color: #63aec0;
+  font-family: Pacifico;
+  font-size: 50px;
+  font-weight: 100;
 }
 
 body content .toInsert {
@@ -40,6 +61,9 @@ body content .toInsert {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  border-bottom: 1px dashed #b877b4;
+  padding-bottom: 50px;
+  margin: 0 50px;
 }
 
 body content .toInsert #titolo {
@@ -106,89 +130,20 @@ body content .toInsert #addBtn:hover {
 }
 
 body content #tasksCompleted {
-  margin-top: 50px;
-  font-size: 20px;
-}
-
-body content #tasksCompleted .header {
+  padding: 25px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 70%;
-  margin: 0 auto;
-  border-bottom: 2px dashed #212931;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-body content #tasksCompleted .header .activity {
-  width: 33%;
-  text-align: right;
-  padding: 10px;
-  color: #e25987;
-}
-
-body content #tasksCompleted .header .hours {
-  width: 33%;
-  text-align: center;
-  padding: 10px;
-  color: #b877b4;
-}
-
-body content #tasksCompleted .header .date {
-  width: 33%;
-  text-align: left;
-  padding: 10px;
-  color: #85ba86;
-}
-
-body content #tasksCompleted .task {
+body content #tasksCompleted .group {
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-bottom: 2px dashed #212931;
-  width: 70%;
-  margin: 0 auto;
-  position: relative;
-}
-
-body content #tasksCompleted .task .taskTitle {
-  text-align: right;
-  width: 50%;
-  padding: 10px;
-}
-
-body content #tasksCompleted .task .taskHours {
-  text-align: center;
-  width: 50%;
-  border-left: 2px solid #212931;
-  padding: 10px;
-}
-
-body content #tasksCompleted .task .taskDate {
-  text-align: left;
-  width: 50%;
-  border-left: 2px solid #212931;
-  padding: 10px;
-}
-
-body content #tasksCompleted .task .deleteElement {
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-  position: absolute;
-  right: 20px;
-  color: #e25987;
-  font-size: 30px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -198,7 +153,99 @@ body content #tasksCompleted .task .deleteElement {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-radius: 100px;
+  font-size: 25px;
+  height: 180px;
+  width: 250px;
+  background: #212931;
+  margin: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+body content #tasksCompleted .group:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+body content #tasksCompleted .task {
+  display: -ms-grid;
+  display: grid;
+      grid-template-areas: "activity activity activity" "hours date delete";
+  -ms-grid-rows: 85% 15%;
+      grid-template-rows: 85% 15%;
+  height: 180px;
+  width: 250px;
+  background: #212931;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+body content #tasksCompleted .task .taskTitle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow-y: scroll;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: activity;
+  border-bottom: 1px dashed #b877b4;
+  margin-bottom: 10px;
+}
+
+body content #tasksCompleted .task .taskHours {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: hours;
+  font-size: 16px;
+  border-right: 1px dashed #b877b4;
+  padding-right: 10px;
+}
+
+body content #tasksCompleted .task .taskDate {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: date;
+  font-size: 16px;
+  border-right: 1px dashed #b877b4;
+}
+
+body content #tasksCompleted .task .deleteElement {
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #e25987;
+  -ms-grid-row: 2;
+  -ms-grid-column: 3;
+  grid-area: delete;
+  font-size: 20px;
   cursor: pointer;
   opacity: 0.8;
 }
@@ -210,7 +257,7 @@ body content #tasksCompleted .task .deleteElement:hover {
 }
 
 body content .qrCodeContainer {
-  position: absolute;
+  position: fixed;
   left: 20px;
   bottom: 20px;
   width: -webkit-fit-content;

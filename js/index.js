@@ -3,7 +3,7 @@ var QRCode = require("qrcode");
 
 // Todo better comments
 
-// Create element
+// Create Task
 function createTask(task) {
   // Style date
   date = new Date(Number(task.date));
@@ -41,6 +41,17 @@ function createTask(task) {
   taskElement.appendChild(dateElement);
   taskElement.appendChild(deleteElement);
   tasksCompleted.appendChild(taskElement);
+}
+
+// Create Group
+function createGroup(group) {
+  date = new Date(Number(group[0].date));
+  groupElement = document.createElement("div");
+  groupElement.setAttribute("class", "group");
+  groupElement.textContent =
+    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+
+  tasksCompleted.appendChild(groupElement);
 }
 
 // Edit date
@@ -124,36 +135,32 @@ ipcRenderer.on("qrCode", (event, arg) => {
 // Todo make services
 
 ipcRenderer.on("sendTasks", (event, arg) => {
-  // Reset tasks
-  tasksCompleted.innerHTML = "";
+  let tasks = arg;
+  console.log(tasks);
+  tasks.sort((a, b) => a.date - b.date);
+  let j = 0;
 
-  // Create header element
-  headerElement = document.createElement("div");
-  headerElement.setAttribute("class", "header");
+  for (let i = 0; i < tasks.length; i++) {
+    const task = tasks[i];
+    let group = [];
+    let finishedGroup = false;
 
-  // Create activity element
-  activityElement = document.createElement("p");
-  activityElement.setAttribute("class", "activity");
-  activityElement.textContent = "Attività";
+    while (tasks[j + 1] && !finishedGroup) {
+      let date = new Date(Number(task.date)).setHours(0, 0, 0, 0);
+      let nextDate = new Date(Number(tasks[j + 1].date)).setHours(0, 0, 0, 0);
 
-  // Create hours element
-  hourLabelElement = document.createElement("p");
-  hourLabelElement.setAttribute("class", "hours");
-  hourLabelElement.textContent = "Ore";
+      if (date == nextDate) {
+        group.push(tasks[j + 1]);
+        j += 1;
+        i = j;
+      } else {
+        finishedGroup = true;
+      }
+    }
+    console.log(group);
+  }
 
-  // Create data element
-  dateLabelElement = document.createElement("p");
-  dateLabelElement.setAttribute("class", "date");
-  dateLabelElement.textContent = "Data";
-
-  // Create append all elements
-  headerElement.appendChild(activityElement);
-  headerElement.appendChild(hourLabelElement);
-  headerElement.appendChild(dateLabelElement);
-  tasksCompleted.appendChild(headerElement);
-
-  // Style elements
-  arg.forEach((task) => {
+  tasks.map((task) => {
     createTask(task);
   });
 });

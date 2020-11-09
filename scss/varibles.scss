@@ -7,3 +7,28 @@ $color_5: #e25987;
 $color_6: #85ba86;
 $color_7: #b877b4;
 $color_8: #e5e5e5;
+
+@font-face {
+  font-family: osevka;
+  src: url("../fonts/Iosevka.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Pacifico;
+  src: url("../fonts/Pacifico.ttf") format("truetype");
+}
+
+* {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color_3;
+    border-radius: 20px;
+  }
+}

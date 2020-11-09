@@ -1,10 +1,5 @@
 @import "./varibles.scss";
 
-@font-face {
-  font-family: osevka;
-  src: url("../fonts/Iosevka.ttf") format("truetype");
-}
-
 * {
   padding: 0;
   margin: 0;
@@ -22,6 +17,9 @@ body {
     padding: 50px;
     h1 {
       color: $color_4;
+      font-family: Pacifico;
+      font-size: 50px;
+      font-weight: 100;
     }
   }
   content {
@@ -29,6 +27,10 @@ body {
       display: flex;
       justify-content: space-evenly;
       align-items: center;
+      border-bottom: 1px dashed $color_7;
+      padding-bottom: 50px;
+      margin: 0 50px;
+
       #titolo {
         border: 0;
         border-radius: 100px;
@@ -77,72 +79,78 @@ body {
         }
       }
     }
+
     #tasksCompleted {
-      margin-top: 50px;
-      font-size: 20px;
-      .header {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        width: 70%;
-        margin: 0 auto;
-        border-bottom: 2px dashed $color_2;
-        .activity {
-          width: 33%;
-          text-align: right;
-          padding: 10px;
-          color: $color_5;
-        }
-        .hours {
-          width: 33%;
-          text-align: center;
-          padding: 10px;
-          color: $color_7;
-        }
-        .date {
-          width: 33%;
-          text-align: left;
-          padding: 10px;
-          color: $color_6;
-        }
-      }
-      .task {
+      padding: 25px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .group {
         transition: 0.5s;
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
         align-items: center;
-        border-bottom: 2px dashed $color_2;
-        width: 70%;
-        margin: 0 auto;
-        position: relative;
-        .taskTitle {
-          text-align: right;
-          width: 50%;
-          padding: 10px;
+        font-size: 25px;
+        height: 180px;
+        width: 250px;
+        background: $color_2;
+        margin: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        &:hover {
+          transform: scale(1.05);
         }
-        .taskHours {
-          text-align: center;
-          width: 50%;
-          border-left: 2px solid $color_2;
-          padding: 10px;
+      }
+
+      .task {
+        display: grid;
+        grid-template-areas:
+          "activity activity activity"
+          "hours date delete";
+        grid-template-rows: 85% 15%;
+        height: 180px;
+        width: 250px;
+        background: $color_2;
+        margin: 20px;
+        padding: 15px;
+        border-radius: 10px;
+
+        .taskTitle {
+          display: flex;
+          overflow-y: scroll;
+          grid-area: activity;
+          border-bottom: 1px dashed $color_7;
+          margin-bottom: 10px;
         }
 
-        .taskDate {
-          text-align: left;
-          width: 50%;
-          border-left: 2px solid $color_2;
-          padding: 10px;
-        }
-        .deleteElement {
-          transition: 0.5s;
-          position: absolute;
-          right: 20px;
-          color: $color_5;
-          font-size: 30px;
+        .taskHours {
           display: flex;
           justify-content: center;
           align-items: center;
-          border-radius: 100px;
+          grid-area: hours;
+          font-size: 16px;
+          border-right: 1px dashed $color_7;
+          padding-right: 10px;
+        }
+
+        .taskDate {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          grid-area: date;
+          font-size: 16px;
+          border-right: 1px dashed $color_7;
+        }
+
+        .deleteElement {
+          transition: 0.2s;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: $color_5;
+          grid-area: delete;
+          font-size: 20px;
           cursor: pointer;
           opacity: 0.8;
           &:hover {
@@ -153,7 +161,7 @@ body {
       }
     }
     .qrCodeContainer {
-      position: absolute;
+      position: fixed;
       left: 20px;
       bottom: 20px;
       width: fit-content;
