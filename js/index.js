@@ -4,7 +4,7 @@ var QRCode = require("qrcode");
 // Todo better comments
 
 // Create Task
-function createTask(task) {
+function createTask(task, fatherElement) {
   // Style date
   date = new Date(Number(task.date));
   taskElement = document.createElement("div");
@@ -40,22 +40,31 @@ function createTask(task) {
   taskElement.appendChild(hoursElement);
   taskElement.appendChild(dateElement);
   taskElement.appendChild(deleteElement);
-  tasksCompleted.appendChild(taskElement);
+  fatherElement.appendChild(taskElement);
 }
 
 // Create Group
 function createGroup(group) {
-  date = new Date(Number(group[0].date));
-  groupElement = document.createElement("div");
+  let date = new Date(Number(group[0].date));
+  let groupElement = document.createElement("div");
   groupElement.setAttribute("class", "group");
   groupElement.textContent =
     date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+  groupElement.setAttribute("onclick", "openGroup(this)");
+
+  let groupTasksElement = document.createElement("div");
+  groupTasksElement.setAttribute("class", "groupTasks");
+
+  group.forEach((task) => {
+    createTask(task, groupTasksElement);
+  });
 
   tasksCompleted.appendChild(groupElement);
+  tasksCompleted.appendChild(groupTasksElement);
 }
 
 // Edit date
-async function editDate(el) {
+function editDate(el) {
   window.addEventListener("click", function (e) {
     if (!el.contains(e.target)) {
       id = el.parentNode.id;
@@ -73,6 +82,10 @@ function deleteTask(el) {
   ipcRenderer.send("deleteTask", id);
 }
 
+function openGroup(el) {
+  el.nextSibling.classList.add("open");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   // DOM elements
   addBtn = document.getElementById("addBtn");
@@ -83,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
   content = document.getElementById("content");
   qrcode = document.getElementById("qrcode");
   qrCodeContainer = document.getElementById("qrCodeContainer");
+  newTaskPopup = document.getElementById("newTaskPopup");
 
   // QRCode
   qrcode.addEventListener("click", () => {
@@ -104,8 +118,14 @@ document.addEventListener("DOMContentLoaded", function () {
     sliderValue = slider.value;
     titoloValue = titolo.value;
     dateValue = new Date();
-
     ipcRenderer.send("addTask", { titoloValue, sliderValue, dateValue });
+    slider.value = 0;
+    titolo.value = "";
+    sliderLabel.innerHTML = "0 H";
+    newTaskPopup.classList.add("pop");
+    setTimeout(() => {
+      newTaskPopup.classList.remove("pop");
+    }, 1000);
   });
 
   ipcRenderer.send("askTasks");
@@ -150,7 +170,7 @@ ipcRenderer.on("sendTasks", (event, arg) => {
       let nextDate = new Date(Number(tasks[j + 1].date)).setHours(0, 0, 0, 0);
 
       if (i === 0) group.push(task);
-      
+
       if (date == nextDate) {
         group.push(tasks[j + 1]);
         j += 1;
@@ -160,13 +180,11 @@ ipcRenderer.on("sendTasks", (event, arg) => {
       }
     }
     console.log(group);
+    if (group.length > 1) createGroup(group);
+    else createTask(group[0], tasksCompleted);
   }
-
-  tasks.map((task) => {
-    createTask(task);
-  });
 });
 
 ipcRenderer.on("newTaskID", (event, arg) => {
-  createTask(arg);
+  createTask(arg, tasksCompleted);
 });

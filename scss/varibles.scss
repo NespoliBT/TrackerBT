@@ -5,6 +5,7 @@ $color_3: #dd83a0;
 $color_4: #63aec0;
 $color_5: #e25987;
 $color_6: #85ba86;
+$color_6_faded: #85ba8650;
 $color_7: #b877b4;
 $color_8: #e5e5e5;
 
@@ -30,5 +31,47 @@ $color_8: #e5e5e5;
   &::-webkit-scrollbar-thumb {
     background: $color_3;
     border-radius: 20px;
+  }
+}
+
+@keyframes updoot {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(-10deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes pop {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 31%;
+  }
+  100% {
+    width: 30%;
+  }
+}
+
+@keyframes vensu {
+  0% {
+    transform: scale(0.8);
+    top: 100vh;
+    background: $color_2;
+  }
+  50% {
+    transform: scale(0.8);
+    top: 0;
+    border-radius: 20px;
+    background: $color_2;
+  }
+  100% {
+    transform: scale(1);
+    border-radius: 0;
   }
 }

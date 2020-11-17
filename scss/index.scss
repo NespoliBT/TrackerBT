@@ -78,6 +78,43 @@ body {
           transform: scale(1.2);
         }
       }
+      #newTaskPopup {
+        display: none;
+      }
+      #newTaskPopup.pop {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .ok {
+          font-size: 50px;
+          height: 150px;
+          width: 150px;
+          display: flex;
+          align-items: center;
+          top: 40px;
+          padding: 50px;
+          background-color: $color_6_faded;
+          border-radius: 10px;
+          position: relative;
+          .hand {
+            color: $color_6;
+            animation: updoot;
+            animation-duration: 1s;
+          }
+        }
+        span {
+          position: absolute;
+          font-size: 15px;
+          bottom: 10px;
+          left: 0px;
+          text-align: center;
+          color: $color_6;
+          width: 100%;
+        }
+      }
     }
 
     #tasksCompleted {
@@ -85,6 +122,8 @@ body {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
 
       .group {
         transition: 0.5s;
@@ -101,6 +140,25 @@ body {
         &:hover {
           transform: scale(1.05);
         }
+      }
+
+      .groupTasks {
+        position: absolute;
+        top: 100vh;
+        background: $color_1;
+        display: flex;
+        justify-content: center;
+      }
+
+      .groupTasks.open {
+        animation: vensu;
+        animation-duration: 1s;
+        z-index: 10;
+        height: 100%;
+        width: 100%;
+        padding: 25px;
+        top: 0;
+        left: 0;
       }
 
       .task {
@@ -167,8 +225,8 @@ body {
       width: fit-content;
       height: fit-content;
       .qrCode {
-        height: 100px;
-        width: 100px;
+        height: 50px;
+        width: 50px;
         cursor: pointer;
         svg {
           border-radius: 4%;
@@ -178,7 +236,7 @@ body {
     .active {
       height: 100%;
       width: 100%;
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       backdrop-filter: blur(2px);
@@ -196,14 +254,12 @@ body {
   }
 }
 
-@keyframes pop {
-  0% {
-    width: 0;
-  }
-  50% {
-    width: 31%;
-  }
-  100% {
-    width: 30%;
+@media screen and (max-width: 700px) {
+  body content .toInsert {
+    flex-wrap: wrap;
+    #titolo {
+      width: 100%;
+      margin-bottom: 50px;
+    }
   }
 }

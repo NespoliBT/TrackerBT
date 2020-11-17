@@ -21,6 +21,102 @@
   border-radius: 20px;
 }
 
+@-webkit-keyframes updoot {
+  0% {
+    -webkit-transform: rotate(0deg) scale(1);
+            transform: rotate(0deg) scale(1);
+  }
+  50% {
+    -webkit-transform: rotate(-10deg) scale(1.2);
+            transform: rotate(-10deg) scale(1.2);
+  }
+  100% {
+    -webkit-transform: rotate(0deg) scale(1);
+            transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes updoot {
+  0% {
+    -webkit-transform: rotate(0deg) scale(1);
+            transform: rotate(0deg) scale(1);
+  }
+  50% {
+    -webkit-transform: rotate(-10deg) scale(1.2);
+            transform: rotate(-10deg) scale(1.2);
+  }
+  100% {
+    -webkit-transform: rotate(0deg) scale(1);
+            transform: rotate(0deg) scale(1);
+  }
+}
+
+@-webkit-keyframes pop {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 31%;
+  }
+  100% {
+    width: 30%;
+  }
+}
+
+@keyframes pop {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 31%;
+  }
+  100% {
+    width: 30%;
+  }
+}
+
+@-webkit-keyframes vensu {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    top: 100vh;
+    background: #212931;
+  }
+  50% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    top: 0;
+    border-radius: 20px;
+    background: #212931;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    border-radius: 0;
+  }
+}
+
+@keyframes vensu {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    top: 100vh;
+    background: #212931;
+  }
+  50% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    top: 0;
+    border-radius: 20px;
+    background: #212931;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    border-radius: 0;
+  }
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -129,6 +225,60 @@ body content .toInsert #addBtn:hover {
           transform: scale(1.2);
 }
 
+body content .toInsert #newTaskPopup {
+  display: none;
+}
+
+body content .toInsert #newTaskPopup.pop {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body content .toInsert #newTaskPopup.pop .ok {
+  font-size: 50px;
+  height: 150px;
+  width: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  top: 40px;
+  padding: 50px;
+  background-color: #85ba8650;
+  border-radius: 10px;
+  position: relative;
+}
+
+body content .toInsert #newTaskPopup.pop .ok .hand {
+  color: #85ba86;
+  -webkit-animation: updoot;
+          animation: updoot;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+}
+
+body content .toInsert #newTaskPopup.pop span {
+  position: absolute;
+  font-size: 15px;
+  bottom: 10px;
+  left: 0px;
+  text-align: center;
+  color: #85ba86;
+  width: 100%;
+}
+
 body content #tasksCompleted {
   padding: 25px;
   display: -webkit-box;
@@ -139,6 +289,8 @@ body content #tasksCompleted {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
 body content #tasksCompleted .group {
@@ -165,6 +317,31 @@ body content #tasksCompleted .group {
 body content #tasksCompleted .group:hover {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
+}
+
+body content #tasksCompleted .groupTasks {
+  position: absolute;
+  top: 100vh;
+  background: #1b2128;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body content #tasksCompleted .groupTasks.open {
+  -webkit-animation: vensu;
+          animation: vensu;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  padding: 25px;
+  top: 0;
+  left: 0;
 }
 
 body content #tasksCompleted .task {
@@ -269,8 +446,8 @@ body content .qrCodeContainer {
 }
 
 body content .qrCodeContainer .qrCode {
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   cursor: pointer;
 }
 
@@ -281,7 +458,7 @@ body content .qrCodeContainer .qrCode svg {
 body content .active {
   height: 100%;
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   -webkit-backdrop-filter: blur(2px);
@@ -307,27 +484,14 @@ body content .active .qrCode {
           animation-duration: 0.5s;
 }
 
-@-webkit-keyframes pop {
-  0% {
-    width: 0;
+@media screen and (max-width: 700px) {
+  body content .toInsert {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
   }
-  50% {
-    width: 31%;
-  }
-  100% {
-    width: 30%;
-  }
-}
-
-@keyframes pop {
-  0% {
-    width: 0;
-  }
-  50% {
-    width: 31%;
-  }
-  100% {
-    width: 30%;
+  body content .toInsert #titolo {
+    width: 100%;
+    margin-bottom: 50px;
   }
 }
 /*# sourceMappingURL=index.css.map */
