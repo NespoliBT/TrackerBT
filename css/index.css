@@ -329,6 +329,28 @@ body content #tasksCompleted .groupTasks {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+body content #tasksCompleted .groupTasks .closeGroup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  padding-right: 10px;
+  right: 100px;
+  height: 40px;
+  width: 40px;
+  font-size: 30px;
+  color: #e25987;
+  cursor: pointer;
 }
 
 body content #tasksCompleted .groupTasks.open {
@@ -342,12 +364,13 @@ body content #tasksCompleted .groupTasks.open {
   padding: 25px;
   top: 0;
   left: 0;
+  overflow-y: scroll;
 }
 
 body content #tasksCompleted .task {
   display: -ms-grid;
   display: grid;
-      grid-template-areas: "activity activity activity" "hours date delete";
+      grid-template-areas: "activity activity activity" "hours date delete";
   -ms-grid-rows: 85% 15%;
       grid-template-rows: 85% 15%;
   height: 180px;

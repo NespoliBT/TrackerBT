@@ -148,6 +148,21 @@ body {
         background: $color_1;
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
+
+        .closeGroup {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          padding-right: 10px;
+          right: 100px;
+          height: 40px;
+          width: 40px;
+          font-size: 30px;
+          color: $color_5;
+          cursor: pointer;
+        }
       }
 
       .groupTasks.open {
@@ -159,6 +174,7 @@ body {
         padding: 25px;
         top: 0;
         left: 0;
+        overflow-y: scroll;
       }
 
       .task {

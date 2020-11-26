@@ -55,6 +55,12 @@ function createGroup(group) {
   let groupTasksElement = document.createElement("div");
   groupTasksElement.setAttribute("class", "groupTasks");
 
+  let closeGroup = document.createElement("div");
+  closeGroup.setAttribute("class", "closeGroup");
+  closeGroup.setAttribute("onclick", "closeGroup(this)");
+  closeGroup.textContent = "";
+  groupTasksElement.appendChild(closeGroup);
+
   group.forEach((task) => {
     createTask(task, groupTasksElement);
   });
@@ -84,6 +90,10 @@ function deleteTask(el) {
 
 function openGroup(el) {
   el.nextSibling.classList.add("open");
+}
+
+function closeGroup(el) {
+  el.parentNode.classList.remove("open");
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -180,7 +190,7 @@ ipcRenderer.on("sendTasks", (event, arg) => {
       }
     }
     console.log(group);
-    if (group.length > 1) createGroup(group);
+    if (group.length > 2) createGroup(group);
     else createTask(group[0], tasksCompleted);
   }
 });
