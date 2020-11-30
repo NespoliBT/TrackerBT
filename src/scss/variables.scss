@@ -1,0 +1,47 @@
+// Varibles
+$color_1: #1b2128;
+$color_2: #212931;
+$color_3: #dd83a0;
+$color_4: #63aec0;
+$color_5: #e25987;
+$color_6: #85ba86;
+$color_7: #b877b4;
+$color_8: #e5e5e5;
+
+* {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color_3;
+    border-radius: 20px;
+  }
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: Iosevka;
+  color: $color_8;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+@font-face {
+  font-family: Iosevka;
+  src: url("../fonts/Iosevka.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Pacifico;
+  src: url("../fonts/Pacifico.ttf") format("truetype");
+}

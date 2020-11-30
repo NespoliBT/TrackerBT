@@ -1,3 +1,4 @@
 node_modules
 trackerbt-*
 data/Database.db
+yarn-error.log

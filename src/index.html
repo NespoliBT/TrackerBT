@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrackerBT</title>
+  </head>
+  <body>
+    <div class="content">
+      <div class="leftPanel">
+        <form id="newTask">
+          <input type="text" id="taskDesc" spellcheck="false" />
+          <input
+            value="0"
+            type="range"
+            id="hourSlider"
+            step="0.5"
+            max="8"
+            min="0,5"
+          />
+          <p class="hourLabel"><span id="hourLabel">0</span> H</p>
+          <button id="addBtn" type="submit">+</button>
+        </form>
+        <div id="groups"></div>
+      </div>
+      <div id="tasks" currentGroup="1"></div>
+    </div>
+  </body>
+</html>

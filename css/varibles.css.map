@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAUA,UAAU;EACR,WAAW,EAAE,MAAM;EACnB,GAAG,EAAE,2BAA2B,CAAC,kBAAkB;;;AAGrD,UAAU;EACR,WAAW,EAAE,QAAQ;EACrB,GAAG,EAAE,4BAA4B,CAAC,kBAAkB;;;AAGtD,AACE,CADD,AACE,mBAAmB,CAAC;EACnB,KAAK,EAAE,IAAI;CACZ;;AAHH,AAKE,CALD,AAKE,yBAAyB,CAAC;EACzB,UAAU,EAAE,IAAI;CACjB;;AAPH,AASE,CATD,AASE,yBAAyB,CAAC;EACzB,UAAU,EA3BJ,OAAO;EA4Bb,aAAa,EAAE,IAAI;CACpB",
-    "sources": [
-        "../trackerbt-linux-x64/resources/app/scss/varibles.scss"
-    ],
-    "names": [],
-    "file": "varibles.css"
-}

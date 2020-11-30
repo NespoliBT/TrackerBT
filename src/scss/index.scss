@@ -1,0 +1,188 @@
+@import "./variables.scss";
+@import "./animations.scss";
+
+body {
+  background: $color_1;
+}
+
+.content {
+  display: flex;
+  padding: 30px 50px;
+  min-height: 100%;
+
+  .leftPanel {
+    padding-top: 50px;
+    border-right: 2px dashed $color_7;
+    padding-right: 50px;
+    min-width: 350px;
+    min-height: 90vh;
+
+    #newTask {
+      display: grid;
+      grid-template-columns: 65% 20% 15%;
+      grid-template-areas:
+        "desc desc desc"
+        "hourSlider hourLabel add";
+      border-bottom: 2px dashed $color_7;
+      padding-bottom: 20px;
+
+      #taskDesc {
+        grid-area: desc;
+        background: $color_2;
+        border-radius: 100px;
+        padding: 15px 30px;
+        color: $color_8;
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      #hourSlider {
+        grid-area: hourSlider;
+        background: $color_2;
+        -webkit-appearance: none;
+        border-radius: 100px;
+        overflow: hidden;
+        margin: 20px;
+
+        &::-webkit-slider-runnable-track {
+          height: 20px;
+          -webkit-appearance: none;
+        }
+
+        &::-webkit-slider-thumb {
+          width: 20px;
+          -webkit-appearance: none;
+          height: 20px;
+          background: $color_3;
+          border-radius: 100%;
+          box-shadow: -300px 0 0 290px $color_3;
+        }
+      }
+      .hourLabel {
+        grid-area: hourLabel;
+        margin-top: 20px;
+        color: $color_8;
+        #hourLabel {
+          float: left;
+          width: 30px;
+        }
+      }
+
+      #addBtn {
+        grid-area: add;
+        transition: 0.2s;
+        background: $color_6;
+        color: $color_1;
+        padding: 5px;
+        font-size: 20px;
+        border-radius: 100px;
+        height: 30px;
+        width: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        justify-self: center;
+        align-self: center;
+        opacity: 0.8;
+        cursor: pointer;
+        &:hover {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    #groups {
+      .group {
+        transition: 0.5s;
+        background: $color_2;
+        margin-top: 20px;
+        padding: 10px 20px;
+        text-align: center;
+        border-radius: 100px;
+        opacity: 0.8;
+        cursor: pointer;
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .group.pop {
+        animation: 0.5s pop;
+      }
+      .removing {
+        animation: 0.5s removing;
+      }
+    }
+  }
+  #tasks {
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: fit-content;
+    width: 100%;
+
+    .task {
+      display: grid;
+      grid-template-areas:
+        "activity activity activity"
+        "hours date delete";
+      grid-template-rows: 85% 15%;
+      height: 180px;
+      width: 250px;
+      background: $color_2;
+      margin: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      .taskDesc {
+        display: flex;
+        overflow-y: scroll;
+        grid-area: activity;
+        border-bottom: 1px dashed $color_7;
+        margin-bottom: 10px;
+        padding-right: 15px;
+      }
+
+      .taskHours {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-area: hours;
+        font-size: 16px;
+        border-right: 1px dashed $color_7;
+        padding-right: 10px;
+      }
+
+      .taskDate {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-area: date;
+        font-size: 16px;
+        border-right: 1px dashed $color_7;
+      }
+
+      .deleteElement {
+        transition: 0.2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $color_5;
+        grid-area: delete;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0.8;
+        &:hover {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
+    }
+    .task.newTask {
+      animation: 0.5s newTask;
+    }
+    .task.removing {
+      animation: 0.5s removing;
+    }
+  }
+}
