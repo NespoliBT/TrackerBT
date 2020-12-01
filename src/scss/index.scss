@@ -94,6 +94,10 @@ body {
 
     #groups {
       .group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
         transition: 0.5s;
         background: $color_2;
         margin-top: 20px;
@@ -104,6 +108,10 @@ body {
         cursor: pointer;
         &:hover {
           opacity: 1;
+        }
+        .groupHours {
+          position: absolute;
+          right: 20px;
         }
       }
       .group.pop {

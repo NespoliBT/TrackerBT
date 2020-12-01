@@ -75,7 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
               if (!groupIDs.includes(data.group.id)) {
                 let groupElement: HTMLElement = taskService.createGroup(
                   data.group.id,
-                  data.group.date
+                  data.group.date,
+                  task.hours
                 );
 
                 groups.appendChild(groupElement);

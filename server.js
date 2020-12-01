@@ -65,6 +65,7 @@ tasksRouter.post("/create", (req, res) => {
           `INSERT INTO groups (date) VALUES (?)`,
           [formattedDate],
           function () {
+            console.log(`A group has been inserted with rowid ${this.lastID}`);
             groupFound = this.lastID;
             insertTask(desc, hours, date, groupFound, res);
           }
@@ -83,8 +84,28 @@ tasksRouter.delete("/delete", (req, res) => {
 });
 
 groupsRouter.get("/", (req, res) => {
+  let formattedGroups = [];
   db.all("SELECT * FROM groups", function (err, groups) {
-    res.json(groups);
+    groups.map((group, i) => {
+      db.all(
+        "SELECT hours FROM tasks WHERE groupID = ?",
+        [group.id],
+        function (err, taskHours) {
+          let totalHours = 0;
+          taskHours.map(({ hours }) => {
+            totalHours += hours;
+          });
+          formattedGroups.push({
+            ...group,
+            hours: totalHours,
+          });
+
+          if (i + 1 === groups.length) {
+            res.json(formattedGroups);
+          }
+        }
+      );
+    });
   });
 });
 
@@ -107,7 +128,7 @@ function insertTask(desc, hours, date, groupFound, res) {
         console.log(error);
         res.status(500).send(error);
       } else {
-        console.log(`A row has been inserted with rowid ${this.lastID}`);
+        console.log(`A task has been inserted with rowid ${this.lastID}`);
 
         task = {
           id: this.lastID,

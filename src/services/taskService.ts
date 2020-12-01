@@ -29,7 +29,7 @@ export module taskService {
     });
   }
 
-  export function createGroup(id: number, date: string) {
+  export function createGroup(id: number, date: string, hours: number) {
     let groupElement = document.createElement("div");
     groupElement.setAttribute("class", "group");
     groupElement.setAttribute("id", id + "");
@@ -42,6 +42,7 @@ export module taskService {
 
     groupElement.innerHTML = `
       <p class="groupDate">${date}</p>
+      <p class="groupHours">${hours} H</p>
     `;
 
     return groupElement;
@@ -78,7 +79,9 @@ export module taskService {
         .then(({ data }) => {
           let groupsArray = [];
           data.map((group) => {
-            groupsArray.push(taskService.createGroup(group.id, group.date));
+            groupsArray.push(
+              taskService.createGroup(group.id, group.date, group.hours)
+            );
           });
           resolve(groupsArray);
         })
