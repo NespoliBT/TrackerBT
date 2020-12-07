@@ -16,6 +16,7 @@ body {
     padding-right: 50px;
     min-width: 350px;
     min-height: 90vh;
+    position: relative;
 
     #newTask {
       display: grid;
@@ -121,6 +122,14 @@ body {
         animation: 0.5s removing;
       }
     }
+
+    .editUI {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 100%;
+      width: 100%;
+    }
   }
   #tasks {
     padding: 0 20px;
@@ -134,7 +143,7 @@ body {
       display: grid;
       grid-template-areas:
         "activity activity activity"
-        "hours date delete";
+        "hours date edit";
       grid-template-rows: 85% 15%;
       height: 180px;
       width: 250px;
@@ -142,6 +151,7 @@ body {
       margin: 20px;
       padding: 15px;
       border-radius: 10px;
+
       .taskDesc {
         display: flex;
         overflow-y: scroll;
@@ -170,13 +180,13 @@ body {
         border-right: 1px dashed $color_7;
       }
 
-      .deleteElement {
+      .editElement {
         transition: 0.2s;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: $color_5;
-        grid-area: delete;
+        color: $color_6;
+        grid-area: edit;
         font-size: 20px;
         cursor: pointer;
         opacity: 0.8;

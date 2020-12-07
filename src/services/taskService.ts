@@ -12,7 +12,7 @@ export module taskService {
    * @async
    * @function createTask
    *
-   * @param { desc: string; hours: number; date: Date } - The attributes of the task that needs to be added.
+   * @param task - The attributes of the task that needs to be added.
    *
    * @returns {Promise} - Task HTML element, group id and date
    */
@@ -86,7 +86,7 @@ export module taskService {
    * This function returns a task's attributes and it's corresponding element
    * given the task's identifier.
    *
-   * @param id {number} - The task's ID
+   * @param id {Number} - The task's ID
    *
    * @returns {Object} The task's description, hours, date and HTML element.
    */
@@ -118,8 +118,8 @@ export module taskService {
  *
  * @function createTaskElement
  *
- * @param task { desc: string; hours: number; date: Date } - The task attributes
- * @param data An object that contains both the task's ID and the group's ID
+ * @param task - The task attributes
+ * @param data - An object that contains both the task's ID and the group's ID
  *
  * @returns {Object} HTML task element and a formatted date
  */
@@ -129,14 +129,16 @@ function createTaskElement(
 ) {
   let taskElement = document.createElement("div");
   let deleteElement = document.createElement("div");
+  let editElement = document.createElement("div");
+
   let date = new Date(Number(task.date));
   let formattedDate =
     date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
-  deleteElement.setAttribute("class", "deleteElement");
-  deleteElement.innerHTML = "";
-  deleteElement.addEventListener("click", () => {
-    deleteTask(Number(taskElement.id), Number(data.groupID));
+  editElement.setAttribute("class", "editElement");
+  editElement.innerHTML = "";
+  editElement.addEventListener("click", () => {
+    editTask(Number(taskElement.id), Number(data.groupID));
   });
 
   taskElement.setAttribute("class", "task newTask");
@@ -147,7 +149,7 @@ function createTaskElement(
             <div class="taskDate">${formattedDate}</div>
           `;
 
-  taskElement.appendChild(deleteElement);
+  taskElement.appendChild(editElement);
 
   return { taskElement, formattedDate };
 }
@@ -158,8 +160,8 @@ function createTaskElement(
  *
  * @function deleteTask
  *
- * @param taskID {number}
- * @param groupID {number}
+ * @param taskID {Number}
+ * @param groupID {Number}
  */
 function deleteTask(taskID: number, groupID: number) {
   axios
@@ -185,4 +187,24 @@ function deleteTask(taskID: number, groupID: number) {
         }
       }, 500);
     });
+}
+
+/**
+ * Opens task editing user interface
+ *
+ * @function editTask
+ *
+ * @param taskID {Number}
+ * @param groupID {Number}
+ *
+ */
+function editTask(taskID: number, groupID: number) {
+  const leftPanel = document.getElementsByClassName("leftPanel")[0];
+  let editUI = document.createElement("div");
+  let task = taskService.getTaskByID(taskID);
+  let group = taskService.getTaskByID(groupID);
+
+  editUI.setAttribute("class", "editUI");
+
+  leftPanel.appendChild(editUI);
 }

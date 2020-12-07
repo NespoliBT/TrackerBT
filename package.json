@@ -5,7 +5,7 @@
   "scripts": {
     "start": "electron .",
     "watch": "webpack --watch",
-    "build": "electron-packager . --all",
+    "build": "electron-packager .",
     "build:src": "webpack"
   },
   "devDependencies": {

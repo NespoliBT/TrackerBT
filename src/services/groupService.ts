@@ -66,7 +66,7 @@ export module groupService {
    *
    * @function getGroupByID
    *
-   * @param id {number} - The group's ID
+   * @param id {Number} - The group's ID
    *
    * @returns {Object} The group's date, hours and HTML element.
    */
