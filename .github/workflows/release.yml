@@ -27,7 +27,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Build frontend directory
-        run: npm run build:src
+        run: ls&&npm run build:src
       
       - name: Build releases
         run: npm run build
