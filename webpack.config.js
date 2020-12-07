@@ -49,5 +49,4 @@ module.exports = {
       chunkFilename: "[id].css",
     }),
   ],
-  watch: true,
 };

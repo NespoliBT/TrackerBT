@@ -4,8 +4,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "watch": "webpack",
-    "build": "electron-packager ."
+    "watch": "webpack --watch",
+    "build": "electron-packager . --all",
+    "build:src": "webpack",
   },
   "devDependencies": {
     "css-loader": "^5.0.1",
