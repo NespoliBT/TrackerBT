@@ -35,7 +35,7 @@ db.run(`
 tasksRouter.get("/", (req, res) => {
   db.all(
     "SELECT * FROM tasks WHERE groupID = ?",
-    [req.query.group],
+    [req.query.groupID],
     function (err, tasks) {
       res.json(tasks);
     }
@@ -78,7 +78,7 @@ tasksRouter.post("/create", (req, res) => {
 });
 
 tasksRouter.delete("/delete", (req, res) => {
-  db.run(`DELETE FROM tasks where id = ?`, [req.query.id], () => {
+  db.run(`DELETE FROM tasks where id = ?`, [req.query.taskID], () => {
     res.sendStatus(200);
   });
 });

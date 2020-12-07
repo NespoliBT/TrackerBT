@@ -153,7 +153,7 @@ body {
 
       .taskHours {
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
         grid-area: hours;
         font-size: 16px;

@@ -1,8 +1,7 @@
-import Task from "./models/Task";
 import "./scss/index.scss";
 import { taskService } from "./services/taskService";
+import { groupService } from "./services/groupService";
 
-// When the page has been rendered
 document.addEventListener("DOMContentLoaded", () => {
   // Save important elements as variables for later use
   const newTask = document.getElementById("newTask");
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  taskService.getGroups().then((groupsArray: Element[]) => {
+  groupService.getGroups().then((groupsArray: Element[]) => {
     groupsArray.forEach((group) => {
       groups.appendChild(group);
     });
@@ -56,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentGroup = Number(tasks.getAttribute("currentGroup"));
 
     if (taskDesc.value) {
-      let task = new Task(desc, hours, date);
+      let task = { desc, hours, date };
       taskService
         .createTask(task)
         .then(
@@ -73,30 +72,33 @@ document.addEventListener("DOMContentLoaded", () => {
               });
 
               if (!groupIDs.includes(data.group.id)) {
-                let groupElement: HTMLElement = taskService.createGroup(
+                let groupElement: HTMLElement = groupService.createGroup(
                   data.group.id,
                   data.group.date,
                   task.hours
                 );
 
                 groups.appendChild(groupElement);
+              } else {
+                let group = groupService.getGroupByID(data.group.id);
+                group.element.classList.add("pop");
+
+                let groupHoursElement = group.element.children
+                  .item(1)
+                  .children.item(0);
+
+                groupHoursElement.innerHTML = group.hours + task.hours + "";
+
+                setTimeout(() => {
+                  group.element.classList.remove("pop");
+                }, 500);
               }
+
               if (currentGroup === data.group.id) {
                 tasks.appendChild(data.taskElement);
               }
-
-              groupsArray = Array.from(groups.children);
-
-              groupsArray.map((group) => {
-                if (Number(group.id) === data.group.id) {
-                  group.classList.add("pop");
-                  setTimeout(() => {
-                    group.classList.remove("pop");
-                  }, 500);
-                }
-              });
             } else {
-              console.log(data.error);
+              throw new Error(data.error);
             }
           }
         );
