@@ -6,7 +6,7 @@
     "start": "electron .",
     "watch": "webpack --watch",
     "build": "electron-packager . --all",
-    "build:src": "webpack",
+    "build:src": "webpack"
   },
   "devDependencies": {
     "css-loader": "^5.0.1",
