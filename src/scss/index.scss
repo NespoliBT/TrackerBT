@@ -122,14 +122,6 @@ body {
         animation: 0.5s removing;
       }
     }
-
-    .editUI {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      height: 100%;
-      width: 100%;
-    }
   }
   #tasks {
     padding: 0 20px;
@@ -202,5 +194,146 @@ body {
     .task.removing {
       animation: 0.5s removing;
     }
+  }
+  .editUI {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    animation: 0.7s editTask ease-in-out;
+    backdrop-filter: blur(2px);
+    border-radius: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .editPanel {
+      display: grid;
+      background: $color_2;
+      border-radius: 10px;
+      height: calc(100% - 200px);
+      width: calc(66% - 200px);
+      min-width: 500px;
+      padding: 50px;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 55px 90px auto 40px;
+
+      #editTaskDesc {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row: 1;
+        background: $color_1;
+        border-radius: 100px;
+        padding: 15px 30px;
+        color: $color_8;
+        font-size: 20px;
+      }
+
+      #editHourSlider {
+        grid-column: 1;
+        grid-row: 2;
+        background: $color_1;
+        -webkit-appearance: none;
+        border-radius: 100px;
+        overflow: hidden;
+        margin: 35px;
+
+        &::-webkit-slider-runnable-track {
+          height: 20px;
+          -webkit-appearance: none;
+        }
+
+        &::-webkit-slider-thumb {
+          width: 20px;
+          -webkit-appearance: none;
+          height: 20px;
+          background: $color_3;
+          border-radius: 100%;
+          box-shadow: -300px 0 0 290px $color_3;
+        }
+      }
+      .editHourLabel {
+        color: $color_8;
+        grid-column: 2;
+        grid-row: 2;
+        margin-top: 35px;
+
+        #hourLabel {
+          float: left;
+          width: 30px;
+        }
+      }
+
+      #editBtn {
+        transition: 0.5s;
+        cursor: pointer;
+        padding: 10px 60px;
+        background: $color_6;
+        font-size: 30px;
+        border-radius: 100px;
+        grid-column: 2;
+        grid-row: 4;
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.8;
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      #exitBtn {
+        transition: 0.5s;
+        cursor: pointer;
+        padding: 10px 60px;
+        background: $color_5;
+        font-size: 30px;
+        border-radius: 100px;
+        grid-column: 1;
+        grid-row: 4;
+        margin-right: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.8;
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      .calendar {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 3;
+        grid-row-end: 3;
+        background: $color_1;
+        margin-bottom: 50px;
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        overflow: hidden;
+
+        .day {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+        }
+
+        .day.border {
+          border-right: 2px solid $color_7;
+        }
+
+        .day.selected {
+          background-color: $color_4;
+          color: $color_2;
+        }
+      }
+    }
+  }
+  .editUI.closing {
+    animation: 0.5s removing;
   }
 }

@@ -81,8 +81,6 @@ export module groupService {
         date = group.children.item(0).innerHTML;
         hours = Number(group.children.item(1).children.item(0).innerHTML);
         element = group;
-      } else {
-        throw new Error("Group not found");
       }
     });
 

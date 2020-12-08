@@ -77,6 +77,73 @@ tasksRouter.post("/create", (req, res) => {
   });
 });
 
+tasksRouter.post("/update", (req, res) => {
+  let id = req.body.id;
+  let desc = req.body.desc;
+  let hours = req.body.hours;
+  let date = new Date(req.body.date);
+
+  let formattedDate =
+    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+
+  db.all(
+    `SELECT id FROM groups WHERE date = ?`,
+    [formattedDate],
+    function (error, IDs) {
+      if (error) {
+        console.log(error);
+        res.status(500).send(error);
+      } else {
+        if (IDs[0]) {
+          db.run(
+            `
+            UPDATE tasks SET desc = ?, hours = ?, date = ?, groupID = ? WHERE id = ?;
+          `,
+            [desc, hours, Number(date), IDs[0].id, id],
+            function (error) {
+              if (error) {
+                console.log(error);
+              } else {
+                res.json(IDs[0].id);
+              }
+            }
+          );
+        } else {
+          db.run(
+            `INSERT INTO groups (date) VALUES (?)`,
+            [formattedDate],
+            function (error) {
+              if (error) {
+                console.log(error);
+              } else {
+                let newGroupID = this.lastID;
+
+                console.log(
+                  `A group has been inserted with rowid ${newGroupID}`
+                );
+
+                db.run(
+                  `
+                  UPDATE tasks SET desc = ?, hours = ?, date = ?, groupID = ? WHERE id = ?;
+                `,
+                  [desc, hours, Number(date), newGroupID, id],
+                  function (error) {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.json(newGroupID);
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+      }
+    }
+  );
+});
+
 tasksRouter.delete("/delete", (req, res) => {
   db.run(`DELETE FROM tasks where id = ?`, [req.query.taskID], () => {
     res.sendStatus(200);

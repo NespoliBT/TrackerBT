@@ -7,7 +7,6 @@ export module taskService {
   /**
    * Adds the given task to the database.
    * Creates the task element.
-   * Calls the createGroup function if there is no group to assign the task to.
    *
    * @async
    * @function createTask
@@ -93,13 +92,16 @@ export module taskService {
   export function getTaskByID(id: number) {
     const tasks = document.getElementById("tasks");
     let tasksArray = Array.from(tasks.children);
-    let desc: string, hours: number, date: string, element: Element;
+    let desc: string, hours: number, date: Date, element: Element;
 
     tasksArray.map((task) => {
       if (Number(task.id) === id) {
+        let formattedDate = task.children.item(2).innerHTML.split("/");
         desc = task.children.item(0).innerHTML;
         hours = Number(task.children.item(1).children.item(0).innerHTML);
-        date = task.children.item(2).innerHTML;
+        date = new Date(
+          formattedDate[1] + " " + formattedDate[0] + " " + formattedDate[2]
+        );
         element = task;
       }
     });
@@ -110,6 +112,29 @@ export module taskService {
       date,
       element,
     };
+  }
+
+  export async function editTask(
+    id: number,
+    date: Date,
+    desc: string,
+    hours: number
+  ) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/tasks/update", {
+          id,
+          date,
+          desc,
+          hours,
+        })
+        .then(({ data }) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   }
 }
 
@@ -138,7 +163,7 @@ function createTaskElement(
   editElement.setAttribute("class", "editElement");
   editElement.innerHTML = "";
   editElement.addEventListener("click", () => {
-    editTask(Number(taskElement.id), Number(data.groupID));
+    editTask(Number(taskElement.id), data.groupID);
   });
 
   taskElement.setAttribute("class", "task newTask");
@@ -195,16 +220,169 @@ function deleteTask(taskID: number, groupID: number) {
  * @function editTask
  *
  * @param taskID {Number}
- * @param groupID {Number}
  *
  */
 function editTask(taskID: number, groupID: number) {
-  const leftPanel = document.getElementsByClassName("leftPanel")[0];
+  const content = document.getElementsByClassName("content")[0];
+  let tasks = document.getElementById("tasks");
   let editUI = document.createElement("div");
+  let editPanel = document.createElement("form");
   let task = taskService.getTaskByID(taskID);
-  let group = taskService.getTaskByID(groupID);
+  let calendar = createCalendar(task);
 
   editUI.setAttribute("class", "editUI");
+  editPanel.setAttribute("class", "editPanel");
 
-  leftPanel.appendChild(editUI);
+  editPanel.innerHTML = `
+    <input type="text" id="editTaskDesc" spellcheck="false" value="${task.desc}"/>
+    <input
+      value="${task.hours}"
+      type="range"
+      id="editHourSlider"
+      step="0.5"
+      max="8"
+      min="0,5"
+    />
+    <p class="editHourLabel"><span id="editHourLabel">${task.hours}</span> H</p>
+    <button id="editBtn" type="submit">✔</button>
+    <button id="exitBtn">✖</button>
+  `;
+
+  editPanel.appendChild(calendar);
+  editUI.appendChild(editPanel);
+  content.appendChild(editUI);
+
+  let editTaskDesc = <HTMLInputElement>document.getElementById("editTaskDesc");
+  let editHourSlider = <HTMLInputElement>(
+    document.getElementById("editHourSlider")
+  );
+  let editHourLabel = document.getElementById("editHourLabel");
+  let exitBtn = document.getElementById("exitBtn");
+
+  editHourSlider.addEventListener("input", () => {
+    editHourLabel.innerHTML = editHourSlider.value;
+  });
+
+  exitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    editUI.classList.add("closing");
+    setTimeout(() => {
+      editUI.remove();
+    }, 500);
+  });
+
+  editPanel.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let groups = document.getElementById("groups");
+    let currentDate = task.date.getDate();
+    let newDateNumber = Number(
+      document.getElementsByClassName("selected")[0].innerHTML
+    );
+
+    let newDate = new Date(task.date.setDate(newDateNumber));
+
+    taskService
+      .editTask(
+        taskID,
+        newDate,
+        editTaskDesc.value,
+        Number(editHourSlider.value)
+      )
+      .then((newGroupID: number) => {
+        let newGroup = groupService.getGroupByID(newGroupID);
+        let group = groupService.getGroupByID(groupID);
+
+        let groupHoursElement = group.element.children.item(1).children.item(0);
+
+        if (newGroup.element) {
+          newGroup.element.classList.add("pop");
+
+          let newGroupHoursElement = newGroup.element.children
+            .item(1)
+            .children.item(0);
+
+          newGroupHoursElement.innerHTML =
+            newGroup.hours + Number(editHourSlider.value) + "";
+
+          setTimeout(() => {
+            newGroup.element.classList.remove("pop");
+          }, 500);
+        } else {
+          let formattedDate =
+            newDate.getDate() +
+            "/" +
+            (newDate.getMonth() + 1) +
+            "/" +
+            newDate.getFullYear();
+
+          let groupElement: HTMLElement = groupService.createGroup(
+            newGroupID,
+            formattedDate,
+            Number(editHourSlider.value)
+          );
+
+          groups.appendChild(groupElement);
+        }
+        if (newDateNumber !== currentDate) {
+          task.element.classList.add("removing");
+          setTimeout(() => {
+            task.element.remove();
+
+            groupHoursElement.innerHTML =
+              group.hours - Number(editHourSlider.value) + "";
+
+            if (tasks.innerHTML === "") {
+              groupService.deleteGroup(group.element);
+            }
+          }, 500);
+        }
+      });
+    editUI.classList.add("closing");
+    setTimeout(() => {
+      editUI.remove();
+    }, 500);
+  });
+}
+
+function createCalendar(task) {
+  let calendar = document.createElement("div");
+  calendar.setAttribute("class", "calendar");
+  calendar.innerHTML = ``;
+  let taskDate = task.date;
+  let firstDay = new Date(taskDate.getFullYear(), taskDate.getMonth(), 1);
+  let lastDay = new Date(taskDate.getFullYear(), taskDate.getMonth() + 1, 0);
+  let nOfDays = lastDay.getDate();
+  let firstDOTWNumber = firstDay.getDay();
+
+  for (let i = 0; i < firstDOTWNumber; i++) {
+    calendar.innerHTML += `
+      <div class="blankDay"></div>
+    `;
+  }
+
+  for (let i = 0; i < nOfDays; i++) {
+    let day = document.createElement("div");
+    day.classList.add("day");
+    day.innerHTML = i + 1 + "";
+
+    day.addEventListener("click", () => {
+      document
+        .getElementsByClassName("selected")[0]
+        .classList.remove("selected");
+      day.classList.add("selected");
+    });
+
+    if (i === taskDate.getDate() - 1) {
+      day.classList.add("selected");
+    }
+
+    if ((i + 1 + firstDOTWNumber) % 7) {
+      day.classList.add("border");
+    }
+
+    calendar.appendChild(day);
+  }
+
+  return calendar;
 }
