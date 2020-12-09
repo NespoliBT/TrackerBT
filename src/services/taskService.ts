@@ -166,6 +166,13 @@ function createTaskElement(
     editTask(Number(taskElement.id), data.groupID);
   });
 
+  deleteElement.setAttribute("class", "deleteElement");
+  deleteElement.innerHTML = "";
+  deleteElement.addEventListener("click", () => {
+    deleteTask(Number(taskElement.id), data.groupID);
+  });
+
+  
   taskElement.setAttribute("class", "task newTask");
   taskElement.setAttribute("id", data.taskID);
   taskElement.innerHTML = `
@@ -175,6 +182,7 @@ function createTaskElement(
           `;
 
   taskElement.appendChild(editElement);
+  taskElement.appendChild(deleteElement);
 
   return { taskElement, formattedDate };
 }

@@ -43,12 +43,10 @@
   0% {
     top: 100vh;
     transform: scale(0.5);
-    backdrop-filter: blur(0px);
   }
   50% {
     top: 0;
     transform: scale(0.5);
-    backdrop-filter: blur(1px);
   }
   100% {
     top: 0;

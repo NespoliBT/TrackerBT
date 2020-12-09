@@ -134,11 +134,11 @@ body {
     .task {
       display: grid;
       grid-template-areas:
-        "activity activity activity"
-        "hours date edit";
+        "activity activity activity activity"
+        "hours date edit delete";
       grid-template-rows: 85% 15%;
       height: 180px;
-      width: 250px;
+      width: 260px;
       background: $color_2;
       margin: 20px;
       padding: 15px;
@@ -187,6 +187,22 @@ body {
           transform: scale(1.1);
         }
       }
+
+      .deleteElement {
+        transition: 0.2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $color_5;
+        grid-area: delete;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0.8;
+        &:hover {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
     }
     .task.newTask {
       animation: 0.5s newTask;
@@ -207,6 +223,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    backdrop-filter: blur(2px);
 
     .editPanel {
       display: grid;
