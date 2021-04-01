@@ -15,7 +15,7 @@ TrackerBT is a simple time tracker. It helps you trace how much time you spend o
 ## Installation
 
 ### Dependencies
-To the dependencies you need to run this command:<br>
+To install the dependencies you need to run this command:<br>
 ```ps
 npm install
 ```
