@@ -90,9 +90,9 @@ export module taskService {
    * @returns {Object} The task's description, hours, date and HTML element.
    */
   export function getTaskByID(id: number) {
-    const tasks = document.getElementById("tasks");
-    let tasksArray = Array.from(tasks.children);
-    let desc: string, hours: number, date: Date, element: Element;
+    const tasks = document.getElementById("tasks").children;
+    let tasksArray = <HTMLElement[]>Array.from(tasks);
+    let desc: string, hours: number, date: Date, element: HTMLElement;
 
     tasksArray.map((task) => {
       if (Number(task.id) === id) {
@@ -172,7 +172,6 @@ function createTaskElement(
     deleteTask(Number(taskElement.id), data.groupID);
   });
 
-  
   taskElement.setAttribute("class", "task newTask");
   taskElement.setAttribute("id", data.taskID);
   taskElement.innerHTML = `
@@ -243,15 +242,17 @@ function editTask(taskID: number, groupID: number) {
 
   editPanel.innerHTML = `
     <input type="text" id="editTaskDesc" spellcheck="false" value="${task.desc}"/>
-    <input
-      value="${task.hours}"
-      type="range"
-      id="editHourSlider"
-      step="0.5"
-      max="8"
-      min="0,5"
-    />
-    <p class="editHourLabel"><span id="editHourLabel">${task.hours}</span> H</p>
+    <div class="hours">
+      <input
+        value="${task.hours}"
+        type="range"
+        id="editHourSlider"
+        step="0.5"
+        max="8"
+        min="0,5"
+      />
+      <p class="editHourLabel"><span id="editHourLabel">${task.hours}</span> H</p>
+    </div>
     <button id="editBtn" type="submit">✔</button>
     <button id="exitBtn">✖</button>
   `;
@@ -303,6 +304,16 @@ function editTask(taskID: number, groupID: number) {
 
         let groupHoursElement = group.element.children.item(1).children.item(0);
 
+        let formattedDate =
+          newDate.getDate() +
+          "/" +
+          (newDate.getMonth() + 1) +
+          "/" +
+          newDate.getFullYear();
+
+        task.element.getElementsByClassName("taskHours")[0].innerHTML =
+          editHourSlider.value + " H";
+
         if (newGroup.element) {
           newGroup.element.classList.add("pop");
 
@@ -317,13 +328,6 @@ function editTask(taskID: number, groupID: number) {
             newGroup.element.classList.remove("pop");
           }, 500);
         } else {
-          let formattedDate =
-            newDate.getDate() +
-            "/" +
-            (newDate.getMonth() + 1) +
-            "/" +
-            newDate.getFullYear();
-
           let groupElement: HTMLElement = groupService.createGroup(
             newGroupID,
             formattedDate,

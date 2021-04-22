@@ -47,11 +47,17 @@ export module groupService {
         .get("/groups")
         .then(({ data }) => {
           let groupsArray = [];
-          data.map((group) => {
+
+          let orderedData = data.sort((a, b) => {
+            return Number(new Date(a.date)) - Number(new Date(b.date))
+          });
+          
+          orderedData.map((group) => {
             groupsArray.push(
               groupService.createGroup(group.id, group.date, group.hours)
             );
           });
+          
           resolve(groupsArray);
         })
         .catch((error) => {

@@ -167,7 +167,7 @@ groupsRouter.get("/", (req, res) => {
             hours: totalHours,
           });
 
-          if (i + 1 === groups.length) {
+          if (groups.length === formattedGroups.length) {
             res.json(formattedGroups);
           }
         }

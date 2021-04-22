@@ -45,6 +45,8 @@ body {
         overflow: hidden;
         margin: 20px;
 
+        border: 5px solid $color_2;
+
         &::-webkit-slider-runnable-track {
           height: 20px;
           -webkit-appearance: none;
@@ -229,10 +231,8 @@ body {
       display: grid;
       background: $color_2;
       border-radius: 10px;
-      height: calc(100% - 200px);
-      width: calc(66% - 200px);
-      min-width: 500px;
-      padding: 50px;
+
+      padding: 30px;
       grid-template-columns: 50% 50%;
       grid-template-rows: 55px 90px auto 40px;
 
@@ -246,39 +246,44 @@ body {
         color: $color_8;
         font-size: 20px;
       }
-
-      #editHourSlider {
-        grid-column: 1;
+      .hours {
+        grid-column-start: 1;
+        grid-column-end: 3;
         grid-row: 2;
-        background: $color_1;
-        -webkit-appearance: none;
-        border-radius: 100px;
-        overflow: hidden;
-        margin: 35px;
 
-        &::-webkit-slider-runnable-track {
-          height: 20px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        #editHourSlider {
+          background: $color_1;
           -webkit-appearance: none;
-        }
+          border-radius: 100px;
+          overflow: hidden;
+          width: 230px;
 
-        &::-webkit-slider-thumb {
-          width: 20px;
-          -webkit-appearance: none;
-          height: 20px;
-          background: $color_3;
-          border-radius: 100%;
-          box-shadow: -300px 0 0 290px $color_3;
-        }
-      }
-      .editHourLabel {
-        color: $color_8;
-        grid-column: 2;
-        grid-row: 2;
-        margin-top: 35px;
+          &::-webkit-slider-runnable-track {
+            height: 20px;
+            -webkit-appearance: none;
+          }
 
-        #hourLabel {
-          float: left;
-          width: 30px;
+          &::-webkit-slider-thumb {
+            width: 20px;
+            -webkit-appearance: none;
+            height: 20px;
+            background: $color_3;
+            border-radius: 100%;
+            box-shadow: -300px 0 0 290px $color_3;
+          }
+        }
+        .editHourLabel {
+          color: $color_8;
+          width: 50px;
+
+          #hourLabel {
+            float: left;
+            width: 30px;
+          }
         }
       }
 
@@ -326,25 +331,34 @@ body {
         grid-row-start: 3;
         grid-row-end: 3;
         background: $color_1;
-        margin-bottom: 50px;
+        margin-bottom: 30px;
         border-radius: 10px;
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         overflow: hidden;
+        padding: 10px;
 
         .day {
+          transition: 0.5s ease-out;
+          border-radius: 10px;
           display: flex;
           justify-content: center;
           align-items: center;
-          cursor: pointer;
-        }
 
-        .day.border {
-          border-right: 2px solid $color_7;
+          height: 50px;
+          width: 50px;
+
+          cursor: pointer;
+          margin: 2.5px;
+
+          &:hover {
+            background: $color_6;
+          }
         }
 
         .day.selected {
           background-color: $color_4;
+          border-radius: 10px;
           color: $color_2;
         }
       }
