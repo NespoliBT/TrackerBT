@@ -49,15 +49,21 @@ export module groupService {
           let groupsArray = [];
 
           let orderedData = data.sort((a, b) => {
-            return Number(new Date(a.date)) - Number(new Date(b.date))
+            let aDate = a.date.split("/");
+            aDate = new Date(aDate[2], aDate[1] - 1, aDate[0]).getTime();
+
+            let bDate = b.date.split("/");
+            bDate = new Date(bDate[2], bDate[1] - 1, bDate[0]).getTime();
+            
+            return aDate - bDate;
           });
-          
+
           orderedData.map((group) => {
             groupsArray.push(
               groupService.createGroup(group.id, group.date, group.hours)
             );
           });
-          
+
           resolve(groupsArray);
         })
         .catch((error) => {
